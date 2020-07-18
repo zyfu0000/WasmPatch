@@ -1,6 +1,6 @@
 # WasmPatch
 
-*Yet Another Patch Module For iOS/macOS* 
+*Yet Another Patch Module for iOS/macOS via WebAssembly* 
 
 [![GitHub issues](https://img.shields.io/github/issues-raw/everettjf/WasmPatch?style=flat-square&label=issues&color=success)](https://github.com/everettjf/WasmPatch/issues) 
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue?style=flat-square)](https://github.com/everettjf/WasmPatch)
@@ -21,7 +21,6 @@ WasmPatch is a **DEMO** now, and is still in development, welcome to improve the
 <img align="right" width="311" height="118" src="/Image/wechat.png">
 
 - 中文介绍: 请关注微信订阅号「首先很有趣」，点击菜单「专辑」查看「WasmPatch探索之路」专辑。
-- English Introduction : TODO.
 
 ## Example
 
