@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import <WasmPatch-TestCase/TestRunner.h>
+#import "objc.c"
 
 @interface AppDelegate ()
 
@@ -19,9 +20,11 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
-    NSString *testCaseBundlePath = [[NSBundle mainBundle] pathForResource:@"WasmPatch-TestCase" ofType:@"bundle"];
-    NSString *scriptBundlePath = [testCaseBundlePath stringByAppendingPathComponent:@"script.bundle"];
-    [TestRunner runTest:scriptBundlePath];
+//    NSString *testCaseBundlePath = [[NSBundle mainBundle] pathForResource:@"WasmPatch-TestCase" ofType:@"bundle"];
+//    NSString *scriptBundlePath = [testCaseBundlePath stringByAppendingPathComponent:@"script.bundle"];
+//    [TestRunner runTest:scriptBundlePath];
+    
+    entry();
     
     return YES;
 }

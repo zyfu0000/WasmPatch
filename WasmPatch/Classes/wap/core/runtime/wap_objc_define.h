@@ -37,7 +37,7 @@ typedef uint32_t WAPResultVoid;
 typedef const char * WAPClassName;
 typedef const char * WAPSelectorName;
 typedef const char * WAPMethodName;
-
+typedef const char * WAPEncodingName;
 
 /**
  Address of WAPInternalArray
