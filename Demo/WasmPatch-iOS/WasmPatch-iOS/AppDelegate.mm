@@ -8,7 +8,9 @@
 
 #import "AppDelegate.h"
 #import <WasmPatch-TestCase/TestRunner.h>
-#import "objc.c"
+#import <WasmPatch-TestCase/ReplaceMe.h>
+
+extern void entry();
 
 @interface AppDelegate ()
 
@@ -25,6 +27,13 @@
 //    [TestRunner runTest:scriptBundlePath];
     
     entry();
+    
+    [ReplaceMe request];
+    [ReplaceMe requestFrom:@"One" to:@"Two"];
+    
+    ReplaceMe * rm = [[ReplaceMe alloc] init];
+    [rm request];
+    [rm requestFrom:@"He" to:@"She"];
     
     return YES;
 }
