@@ -8,9 +8,6 @@
 
 #import "AppDelegate.h"
 #import <WasmPatch-TestCase/TestRunner.h>
-#import <WasmPatch-TestCase/ReplaceMe.h>
-
-extern void entry();
 
 @interface AppDelegate ()
 
@@ -22,18 +19,9 @@ extern void entry();
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
-//    NSString *testCaseBundlePath = [[NSBundle mainBundle] pathForResource:@"WasmPatch-TestCase" ofType:@"bundle"];
-//    NSString *scriptBundlePath = [testCaseBundlePath stringByAppendingPathComponent:@"script.bundle"];
-//    [TestRunner runTest:scriptBundlePath];
-    
-    entry();
-    
-    [ReplaceMe request];
-    [ReplaceMe requestFrom:@"One" to:@"Two"];
-    
-    ReplaceMe * rm = [[ReplaceMe alloc] init];
-    [rm request];
-    [rm requestFrom:@"He" to:@"She"];
+    NSString *testCaseBundlePath = [[NSBundle mainBundle] pathForResource:@"WasmPatch-TestCase" ofType:@"bundle"];
+    NSString *scriptBundlePath = [testCaseBundlePath stringByAppendingPathComponent:@"script.bundle"];
+    [TestRunner runTest:scriptBundlePath];
     
     return YES;
 }

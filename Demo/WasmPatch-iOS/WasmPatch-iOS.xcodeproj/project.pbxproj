@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		24A8E871DD3D056EB12AC033 /* libPods-WasmPatch-iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BBE0CCE27C2BBFED982DF08F /* libPods-WasmPatch-iOS.a */; };
-		72DC88FC250E012F002AB981 /* objc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 72DC88FB250E012F002AB981 /* objc.cpp */; };
 		D11FD2FE24A8E71100674092 /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = D11FD2FD24A8E71100674092 /* AppDelegate.mm */; };
 		D11FD30424A8E71100674092 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D11FD30324A8E71100674092 /* ViewController.m */; };
 		D11FD30724A8E71100674092 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D11FD30524A8E71100674092 /* Main.storyboard */; };
@@ -22,8 +21,6 @@
 		2BDBDBD7F5E2E36F04BC87DC /* Pods-WasmPatch-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WasmPatch-iOS.debug.xcconfig"; path = "Target Support Files/Pods-WasmPatch-iOS/Pods-WasmPatch-iOS.debug.xcconfig"; sourceTree = "<group>"; };
 		3A75E23BA529EAEEB144B304 /* Pods-WasmPatch-iOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WasmPatch-iOSTests.release.xcconfig"; path = "Target Support Files/Pods-WasmPatch-iOSTests/Pods-WasmPatch-iOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		5443104AD07B7B0FEF0F47B2 /* Pods-WasmPatch-iOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WasmPatch-iOSTests.debug.xcconfig"; path = "Target Support Files/Pods-WasmPatch-iOSTests/Pods-WasmPatch-iOSTests.debug.xcconfig"; sourceTree = "<group>"; };
-		72DC88FA250E012F002AB981 /* WAPDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WAPDefine.h; sourceTree = "<group>"; };
-		72DC88FB250E012F002AB981 /* objc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = objc.cpp; sourceTree = "<group>"; };
 		BBE0CCE27C2BBFED982DF08F /* libPods-WasmPatch-iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-WasmPatch-iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D11FD2F924A8E71100674092 /* WasmPatch-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "WasmPatch-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D11FD2FC24A8E71100674092 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -82,8 +79,6 @@
 		D11FD2FB24A8E71100674092 /* WasmPatch-iOS */ = {
 			isa = PBXGroup;
 			children = (
-				72DC88FB250E012F002AB981 /* objc.cpp */,
-				72DC88FA250E012F002AB981 /* WAPDefine.h */,
 				D11FD2FC24A8E71100674092 /* AppDelegate.h */,
 				D11FD2FD24A8E71100674092 /* AppDelegate.mm */,
 				D11FD30224A8E71100674092 /* ViewController.h */,
@@ -221,7 +216,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				D11FD30424A8E71100674092 /* ViewController.m in Sources */,
-				72DC88FC250E012F002AB981 /* objc.cpp in Sources */,
 				D11FD2FE24A8E71100674092 /* AppDelegate.mm in Sources */,
 				D11FD30F24A8E71200674092 /* main.m in Sources */,
 			);
