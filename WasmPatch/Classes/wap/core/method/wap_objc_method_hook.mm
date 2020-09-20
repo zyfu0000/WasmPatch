@@ -42,6 +42,8 @@ void ObjcMethodHook::hook() {
     }
     
     SEL sel = sel_registerName(this->selName.c_str());
+    std::string replaceSelName = "wap_" + this->selName;
+    SEL replaceSel = sel_registerName(replaceSelName.c_str());
 
     Method method = class_getInstanceMethod(cls, sel);
     if (!method) {
@@ -74,11 +76,9 @@ void ObjcMethodHook::hook() {
 
     IMP replacementImp = (IMP)context.function_address;
     
-    if (!class_addMethod(cls, sel, replacementImp, typeEncoding)) {
-        class_replaceMethod(cls, sel, replacementImp, typeEncoding);
-    }
-
+    class_addMethod(cls, replaceSel, replacementImp, typeEncoding);
+    Method replaceMethod = class_getInstanceMethod(cls, replaceSel);
+    method_exchangeImplementations(method, replaceMethod);
 }
-
 }
 

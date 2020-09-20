@@ -12,7 +12,10 @@ int my_class_ReplaceMe_requestfromto(WAPObject self, const char * cmd, WAPArray 
 int my_instance_ReplaceMe_request(WAPObject self, const char * cmd) {
     print_string("replaced - ReplaceMe request");
     
-    call_instance_method_0(self, "request");
+    const char *newCmd = "wap_request";
+    print_string(newCmd);
+    
+    call_instance_method_0(self, newCmd);
     
     return 0;
 }
