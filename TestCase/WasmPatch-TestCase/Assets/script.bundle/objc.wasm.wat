@@ -21,12 +21,12 @@
   (import "env" "print_string" (func (;0;) (type 8)))
   (import "env" "call_instance_method_0" (func (;1;) (type 14)))
   (import "env" "call_class_method_0" (func (;2;) (type 11)))
-  (import "env" "new_objc_nsstring" (func (;3;) (type 0)))
-  (import "env" "call_class_method_1" (func (;4;) (type 5)))
-  (import "env" "dealloc_object" (func (;5;) (type 1)))
-  (import "env" "call_class_method_2" (func (;6;) (type 12)))
-  (import "env" "alloc_objc_class" (func (;7;) (type 0)))
-  (import "env" "call_instance_method_1" (func (;8;) (type 15)))
+  (import "env" "call_instance_method_1" (func (;3;) (type 15)))
+  (import "env" "new_objc_nsstring" (func (;4;) (type 0)))
+  (import "env" "call_class_method_1" (func (;5;) (type 5)))
+  (import "env" "dealloc_object" (func (;6;) (type 1)))
+  (import "env" "call_class_method_2" (func (;7;) (type 12)))
+  (import "env" "alloc_objc_class" (func (;8;) (type 0)))
   (import "env" "call_instance_method_2" (func (;9;) (type 16)))
   (import "env" "replace_class_method" (func (;10;) (type 2)))
   (import "env" "replace_instance_method" (func (;11;) (type 2)))
@@ -69,112 +69,123 @@
     i32.const 1138
     call 0
     drop
+    i32.const 1182
+    i32.const 1196
+    call 2
+    i32.const 1214
+    call 1
+    i32.const 1241
+    i32.const 1224
+    i32.const 1232
+    call 2
+    call 3
+    drop
     i32.const 0)
   (func (;28;) (type 7) (result i32)
     (local i64 i64 i64)
-    i32.const 1182
-    i32.const 1189
+    i32.const 1261
+    i32.const 1268
     call 2
     drop
-    i32.const 1182
-    i32.const 1215
-    i32.const 1195
-    call 3
-    local.tee 0
+    i32.const 1261
+    i32.const 1294
+    i32.const 1274
     call 4
-    drop
-    local.get 0
+    local.tee 0
     call 5
     drop
-    i32.const 1182
-    i32.const 1253
-    i32.const 1224
-    call 3
-    local.tee 0
-    i32.const 1242
-    call 3
-    local.tee 1
+    local.get 0
     call 6
     drop
+    i32.const 1261
+    i32.const 1332
+    i32.const 1303
+    call 4
+    local.tee 0
+    i32.const 1321
+    call 4
+    local.tee 1
+    call 7
+    drop
     local.get 0
-    call 5
+    call 6
     drop
     local.get 1
-    call 5
+    call 6
     drop
-    i32.const 1182
-    call 7
+    i32.const 1261
+    call 8
     local.tee 0
-    i32.const 1189
+    i32.const 1268
     call 1
     drop
     local.get 0
-    call 5
+    call 6
     drop
-    i32.const 1182
-    call 7
-    local.tee 0
-    i32.const 1215
-    i32.const 1195
-    call 3
-    local.tee 1
+    i32.const 1261
     call 8
+    local.tee 0
+    i32.const 1294
+    i32.const 1274
+    call 4
+    local.tee 1
+    call 3
     drop
     local.get 1
-    call 5
+    call 6
     drop
     local.get 0
-    call 5
+    call 6
     drop
-    i32.const 1182
-    call 7
+    i32.const 1261
+    call 8
     local.tee 0
-    i32.const 1253
-    i32.const 1224
-    call 3
+    i32.const 1332
+    i32.const 1303
+    call 4
     local.tee 1
-    i32.const 1242
-    call 3
+    i32.const 1321
+    call 4
     local.tee 2
     call 9
     drop
     local.get 1
-    call 5
+    call 6
     drop
     local.get 2
-    call 5
+    call 6
     drop
     local.get 0
-    call 5
+    call 6
     drop
-    i32.const 1267
-    i32.const 1277
-    i32.const 1285
+    i32.const 1346
+    i32.const 1356
+    i32.const 1364
     call 10
     drop
-    i32.const 1267
-    i32.const 1312
-    i32.const 1328
-    call 10
-    drop
-    i32.const 1267
-    i32.const 1277
-    i32.const 1361
-    call 11
-    drop
-    i32.const 1267
-    i32.const 1312
+    i32.const 1346
     i32.const 1391
+    i32.const 1407
+    call 10
+    drop
+    i32.const 1346
+    i32.const 1356
+    i32.const 1440
     call 11
     drop
-    i32.const 1427
+    i32.const 1346
+    i32.const 1391
+    i32.const 1470
+    call 11
+    drop
+    i32.const 1506
     call 0
     drop
-    i32.const 1440
-    call 3
+    i32.const 1519
+    call 4
     local.set 0
-    i32.const 1445
-    call 3
+    i32.const 1524
+    call 4
     local.set 1
     local.get 0
     call 12
@@ -183,10 +194,10 @@
     call 12
     drop
     local.get 0
-    call 5
+    call 6
     drop
     local.get 1
-    call 5
+    call 6
     drop
     i32.const 1
     call 13
@@ -194,7 +205,7 @@
     call 12
     drop
     local.get 0
-    call 5
+    call 6
     drop
     call 14
     local.tee 0
@@ -218,48 +229,48 @@
     call 15
     drop
     local.get 0
-    i32.const 1454
-    call 3
+    i32.const 1533
+    call 4
     call 15
     drop
     local.get 0
-    i32.const 1464
+    i32.const 1543
     call 20
     call 15
     drop
-    i32.const 1182
-    i32.const 1476
+    i32.const 1261
+    i32.const 1555
     local.get 0
     call 21
     drop
     local.get 0
     call 22
     drop
-    i32.const 1182
-    call 7
-    i32.const 1514
+    i32.const 1261
+    call 8
+    i32.const 1593
     call 1
     local.tee 0
     call 12
     drop
     local.get 0
-    i32.const 1519
+    i32.const 1598
     call 1
     local.tee 1
     call 12
     drop
     local.get 1
-    call 5
+    call 6
     drop
     local.get 0
-    call 5
+    call 6
     drop
     i32.const 0)
   (memory (;0;) 2)
   (global (;0;) i32 (i32.const 1024))
-  (global (;1;) i32 (i32.const 1532))
+  (global (;1;) i32 (i32.const 1611))
   (global (;2;) i32 (i32.const 1024))
-  (global (;3;) i32 (i32.const 67072))
+  (global (;3;) i32 (i32.const 67152))
   (global (;4;) i32 (i32.const 0))
   (global (;5;) i32 (i32.const 1))
   (export "memory" (memory 0))
@@ -275,4 +286,4 @@
   (export "__heap_base" (global 3))
   (export "__memory_base" (global 4))
   (export "__table_base" (global 5))
-  (data (;0;) (i32.const 1024) "replaced + ReplaceMe request\00replaced + ReplaceMe requestFrom:Two to:One\00replaced - ReplaceMe request\00wap_request\00replaced - ReplaceMe requestFrom:Two to:One\00CallMe\00sayHi\00I am from c program\00sayWord:\00How are you today\00I am happy\00sayYou:andMe:\00ReplaceMe\00request\00my_class_ReplaceMe_request\00requestFrom:to:\00my_class_ReplaceMe_requestfromto\00my_instance_ReplaceMe_request\00my_instance_ReplaceMe_requestfromto\00hello matrix\00good\00 morning\00excellent\00WebAssembly\00callWithManyArguments:p1:p2:p3:p4:p5:\00init\00returnString"))
+  (data (;0;) (i32.const 1024) "replaced + ReplaceMe request\00replaced + ReplaceMe requestFrom:Two to:One\00replaced - ReplaceMe request\00wap_request\00replaced - ReplaceMe requestFrom:Two to:One\00UIApplication\00sharedApplication\00keyWindow\00UIColor\00redColor\00setBackgroundColor:\00CallMe\00sayHi\00I am from c program\00sayWord:\00How are you today\00I am happy\00sayYou:andMe:\00ReplaceMe\00request\00my_class_ReplaceMe_request\00requestFrom:to:\00my_class_ReplaceMe_requestfromto\00my_instance_ReplaceMe_request\00my_instance_ReplaceMe_requestfromto\00hello matrix\00good\00 morning\00excellent\00WebAssembly\00callWithManyArguments:p1:p2:p3:p4:p5:\00init\00returnString"))

@@ -23,7 +23,11 @@ int my_instance_ReplaceMe_request(WAPObject self, const char * cmd) {
 int my_instance_ReplaceMe_requestfromto(WAPObject self, const char * cmd, WAPArray parameters) {
     print_string("replaced - ReplaceMe requestFrom:Two to:One");
     
+    WAPObject application = call_class_method_0("UIApplication", "sharedApplication");
+    WAPObject window = call_instance_method_0(application, "keyWindow");
     
+    WAPObject color = call_class_method_0("UIColor", "redColor");
+    call_instance_method_1(window, "setBackgroundColor:", color);
     
     return 0;
 }
