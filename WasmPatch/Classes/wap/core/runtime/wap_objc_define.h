@@ -37,7 +37,6 @@ typedef uint32_t WAPResultVoid;
 typedef const char * WAPClassName;
 typedef const char * WAPSelectorName;
 typedef const char * WAPMethodName;
-typedef const char * WAPEncodingName;
 
 /**
  Address of WAPInternalArray
@@ -117,5 +116,15 @@ inline WAPInternalArray * GetInternalArray(WAPArray addr) {
     return param;
 }
 
+// added by zhiyangfu
+
+typedef const char * WAPEncodingName;
+typedef const char * WAPPropertyName;
+typedef const char * WAPIVarName;
+
+struct WAPPropertyAttribute {
+    const char * _Nonnull name;           /**< The name of the attribute */
+    const char * _Nonnull value;          /**< The value of the attribute (usually empty) */
+};
 
 #endif /* wap_objc_define_h */

@@ -45,3 +45,18 @@ extern WAPResultVoid replace_instance_method(WAPClassName class_name, WAPSelecto
 // helper
 extern WAPObject new_objc_nsstring(const char * str);
 extern WAPObject new_objc_nsnumber_int(int value);
+
+// added by zhiyangfu
+
+typedef const char * WAPEncodingName;
+typedef const char * WAPPropertyName;
+typedef const char * WAPIVarName;
+
+struct WAPPropertyAttribute {
+    const char * _Nonnull name;           /**< The name of the attribute */
+    const char * _Nonnull value;          /**< The value of the attribute (usually empty) */
+};
+
+extern WAPResultVoid objc_allocate_class_pair(WAPClassName sub_class_name, WAPClassName base_class_name);
+extern WAPResultVoid objc_class_add_property(WAPClassName class_name, WAPPropertyName property_name, WAPPropertyAttribute *attributes, unsigned int attributeCount);
+extern WAPResultVoid objc_register_class_pair(WAPClassName class_name);

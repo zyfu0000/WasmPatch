@@ -18,44 +18,6 @@ WAPObject alloc_objc_class(WAPClassName class_name) {
     return WAPCreateObjectFromObjcValue("objc", val);
 }
 
-WAPResultVoid objc_allocate_class_pair(WAPClassName sub_class_name, WAPClassName base_class_name) {
-    Class baseClass = objc_getClass(base_class_name);
-    Class subClass = objc_getClass(sub_class_name);
-    if (!subClass) {
-       objc_allocateClassPair(baseClass, sub_class_name, 0);
-    }
-    
-    return 0;
-}
-
-//type定义参考:https://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtTypeEncodings.html
-
-WAPResultVoid objc_class_add_ivar(WAPClassName class_name, WAPSelectorName selector_name, WAPEncodingName encoding) {
-    Class cls = objc_getClass(class_name);
-    NSUInteger size;
-    NSUInteger alignment;
-    NSGetSizeAndAlignment(encoding, &size, &alignment);
-    class_addIvar(cls, selector_name, size, alignment, encoding);
-    
-    return 0;
-}
-
-//1.type定义参考:https://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtTypeEncodings.html
-// 2."v@:@",解释v-返回值void类型,@-self指针id类型,:-SEL指针SEL类型,@-函数第一个参数为id类型
-// 3."@@:",解释@-返回值id类型,@-self指针id类型,:-SEL指针SEL类型,
-//WAPResultVoid objc_class_add_method(WAPClassName class_name, WAPSelectorName selector_name, WAPSelectorName imp, WAPEncodingName encoding) {
-//    Class cls = objc_getClass(class_name);
-//    class_addMethod(cls, @selector(selector_name), (IMP)setExpressionFormula, encoding);
-//
-//    return 0;
-//}
-
-WAPResultVoid objc_register_class_pair(WAPClassName class_name) {
-    Class cls = objc_getClass(class_name);
-    objc_registerClassPair(cls);
-    return 0;
-}
-
 WAPObject alloc_int32(int32_t v) { return WAPCreateObjectFromPlainValue("int32", @(v)); }
 WAPObject alloc_int64(int64_t v) { return WAPCreateObjectFromPlainValue("int64", @(v)); }
 WAPObject alloc_float(float v) { return WAPCreateObjectFromPlainValue("float", @(v)); }
@@ -159,6 +121,82 @@ __WAP_EXPORT_FUNCTION(dealloc_object_raw) {
     m3ApiReturnType (WAPResultVoid)
     m3ApiGetArg  (WAPObject, addr)
     WAPResultVoid result = dealloc_object(addr);
+    m3ApiReturn (result)
+}
+
+// added by zhiyangfu
+
+WAPResultVoid objc_allocate_class_pair(WAPClassName sub_class_name, WAPClassName base_class_name) {
+    Class baseClass = objc_getClass(base_class_name);
+    Class subClass = objc_getClass(sub_class_name);
+    if (!subClass) {
+       objc_allocateClassPair(baseClass, sub_class_name, 0);
+    }
+    
+    return 0;
+}
+
+__WAP_EXPORT_FUNCTION(objc_allocate_class_pair_raw) {
+    m3ApiReturnType (WAPResultVoid)
+    m3ApiGetArgMem  (WAPClassName, sub_class_name)
+    m3ApiGetArgMem  (WAPClassName, base_class_name)
+    WAPResultVoid result = objc_allocate_class_pair(sub_class_name, base_class_name);
+    m3ApiReturn (result)
+}
+
+WAPResultVoid objc_class_add_property(WAPClassName class_name, WAPPropertyName property_name, WAPPropertyAttribute *attributes, unsigned int attributeCount)
+{
+    Class cls = objc_getClass(class_name);
+    
+    const objc_property_attribute_t *attribute_ts = (const objc_property_attribute_t *)attributes;
+    
+    class_addProperty(cls, property_name, attribute_ts, attributeCount);
+    
+    return 0;
+}
+
+__WAP_EXPORT_FUNCTION(objc_class_add_property_raw) {
+    m3ApiReturnType (WAPResultVoid)
+    m3ApiGetArgMem  (WAPClassName, class_name)
+    m3ApiGetArgMem  (WAPPropertyName, property_name)
+    m3ApiGetArgMem  (WAPPropertyAttribute *, attributes)
+    m3ApiGetArg  (int32_t, count)
+    WAPResultVoid result = objc_class_add_property(class_name, property_name, attributes, count);
+    m3ApiReturn (result)
+}
+
+//type定义参考:https://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtTypeEncodings.html
+
+WAPResultVoid objc_class_add_ivar(WAPClassName class_name, WAPIVarName ivar_name, WAPEncodingName encoding) {
+    Class cls = objc_getClass(class_name);
+    NSUInteger size;
+    NSUInteger alignment;
+    NSGetSizeAndAlignment(encoding, &size, &alignment);
+    class_addIvar(cls, ivar_name, size, alignment, encoding);
+    
+    return 0;
+}
+
+//1.type定义参考:https://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtTypeEncodings.html
+// 2."v@:@",解释v-返回值void类型,@-self指针id类型,:-SEL指针SEL类型,@-函数第一个参数为id类型
+// 3."@@:",解释@-返回值id类型,@-self指针id类型,:-SEL指针SEL类型,
+//WAPResultVoid objc_class_add_method(WAPClassName class_name, WAPSelectorName selector_name, WAPSelectorName imp, WAPEncodingName encoding) {
+//    Class cls = objc_getClass(class_name);
+//    class_addMethod(cls, @selector(selector_name), (IMP)setExpressionFormula, encoding);
+//
+//    return 0;
+//}
+
+WAPResultVoid objc_register_class_pair(WAPClassName class_name) {
+    Class cls = objc_getClass(class_name);
+    objc_registerClassPair(cls);
+    return 0;
+}
+
+__WAP_EXPORT_FUNCTION(objc_register_class_pair_raw) {
+    m3ApiReturnType (WAPResultVoid)
+    m3ApiGetArgMem  (WAPClassName, class_name)
+    WAPResultVoid result = objc_register_class_pair(class_name);
     m3ApiReturn (result)
 }
 
