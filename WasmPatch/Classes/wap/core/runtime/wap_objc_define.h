@@ -55,6 +55,7 @@ struct WAPInternalObject {
      p : Plain type
      o : Objc type
      v : Void // used for function result
+     s : struct
      */
     WAPInternalObjectCategory cate;
     /**
@@ -68,6 +69,8 @@ struct WAPInternalObject {
         string
      when cate == o:
         objc type
+     when cate == s:
+        struct type
      */
     WAPInternalObjectType type;
     /**
@@ -121,10 +124,5 @@ inline WAPInternalArray * GetInternalArray(WAPArray addr) {
 typedef const char * WAPEncodingName;
 typedef const char * WAPPropertyName;
 typedef const char * WAPIVarName;
-
-struct WAPPropertyAttribute {
-    const char * _Nonnull name;           /**< The name of the attribute */
-    const char * _Nonnull value;          /**< The value of the attribute (usually empty) */
-};
 
 #endif /* wap_objc_define_h */

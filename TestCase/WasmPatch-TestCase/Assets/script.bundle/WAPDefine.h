@@ -57,6 +57,7 @@ struct WAPPropertyAttribute {
     const char * _Nonnull value;          /**< The value of the attribute (usually empty) */
 };
 
-extern WAPResultVoid objc_allocate_class_pair(WAPClassName sub_class_name, WAPClassName base_class_name);
-extern WAPResultVoid objc_class_add_property(WAPClassName class_name, WAPPropertyName property_name, WAPPropertyAttribute *attributes, unsigned int attributeCount);
-extern WAPResultVoid objc_register_class_pair(WAPClassName class_name);
+extern WAPObject objc_allocate_class_pair(WAPClassName sub_class_name, WAPClassName base_class_name);
+extern WAPResultVoid objc_class_add_property(WAPObject clazz, WAPPropertyName property_name, WAPObject attributes_addr);
+extern WAPResultVoid objc_class_append_property(WAPClassName class_name, WAPPropertyName property_name, WAPObject attributes_addr);
+extern WAPResultVoid objc_register_class_pair(WAPObject cls);

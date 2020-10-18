@@ -74,6 +74,12 @@ void ObjcRuntime::initRuntime() {
     
     RT_LINK(replace_class_method);
     RT_LINK(replace_instance_method);
+    
+    // add by zhiyangfu
+    RT_LINK(objc_class_add_property);
+    RT_LINK(objc_class_append_property);
+    RT_LINK(objc_allocate_class_pair);
+    RT_LINK(objc_register_class_pair);
 }
 
 }

@@ -29,10 +29,21 @@ int my_instance_ReplaceMe_requestfromto(WAPObject self, const char * cmd, WAPArr
     WAPObject color = call_class_method_0("UIColor", "redColor");
     call_instance_method_1(window, "setBackgroundColor:", color);
     
+    
+    
     return 0;
 }
 
 int entry() {
+    WAPArray attributes = alloc_array();
+    append_array(attributes, alloc_string("T"));
+    append_array(attributes, alloc_string("@\"NSString\""));
+    append_array(attributes, alloc_string("C"));
+    append_array(attributes, alloc_string(""));
+    append_array(attributes, alloc_string("V"));
+    append_array(attributes, alloc_string("_xxx"));
+    objc_class_append_property("CallMe", "xxx", attributes);
+    
     // method call - class method
     call_class_method_0("CallMe", "sayHi");
     
@@ -53,7 +64,7 @@ int entry() {
 
     WAPObject call1 = alloc_objc_class("CallMe");
     word = new_objc_nsstring("I am from c program");
-    call_instance_method_1(call1,"sayWord:", word);
+    call_instance_method_1(call1, "sayWord:", word);
     dealloc_object(word);
     dealloc_object(call1);
 
@@ -61,6 +72,7 @@ int entry() {
     word1 = new_objc_nsstring("How are you today");
     word2 = new_objc_nsstring("I am happy");
     call_instance_method_2(call2, "sayYou:andMe:", word1, word2);
+    call_instance_method_1(call1, "setXxx:", word1);
     dealloc_object(word1);
     dealloc_object(word2);
     dealloc_object(call2);
@@ -105,8 +117,33 @@ int entry() {
     print_object(c);
     WAPObject result = call_instance_method_0(c, "returnString");
     print_object(result);
+    
+    WAPObject word7 = new_objc_nsstring("setxxx");
+    call_instance_method_1(c, "setXxx:", word7);
+    result = call_instance_method_0(c, "xxx");
+    print_object(result);
+    
     dealloc_object(result);
     dealloc_object(c);
+    
+    WAPObject cls = objc_allocate_class_pair("FCK", "NSObject");
+    WAPArray attributes1 = alloc_array();
+    append_array(attributes1, alloc_string("T"));
+    append_array(attributes1, alloc_string("@\"NSString\""));
+    append_array(attributes1, alloc_string("C"));
+    append_array(attributes1, alloc_string(""));
+    append_array(attributes1, alloc_string("V"));
+    append_array(attributes1, alloc_string("_xxx"));
+    objc_class_add_property(cls, "xxx", attributes1);
+    objc_register_class_pair(cls);
+    
+    WAPObject c4 = alloc_objc_class("FCK");
+    c4 = call_instance_method_0(c4, "init");
+    WAPObject word4 = new_objc_nsstring("gg");
+    call_instance_method_1(c4, "setXxx:", word4);
+    
+    WAPObject result4 = call_instance_method_0(c4, "xxx");
+    print_object(result4);
 
     return 0;
 }
