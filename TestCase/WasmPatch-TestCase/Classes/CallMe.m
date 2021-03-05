@@ -12,6 +12,12 @@
 // class methods
 + (void)sayHi {
     NSLog(@"+ %@ %@", NSStringFromClass(self), NSStringFromSelector(_cmd));
+    
+    NSLog(@"fibonacci: %@", @([[NSDate date] timeIntervalSince1970]));
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        NSLog(@"fibonacci: %@", @([[NSDate date] timeIntervalSince1970]));
+    });
 }
 + (void)sayWord:(NSString*)word {
     NSLog(@"+ %@ %@ word=%@", NSStringFromClass(self),NSStringFromSelector(_cmd), word);

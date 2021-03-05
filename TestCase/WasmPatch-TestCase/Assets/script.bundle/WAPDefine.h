@@ -61,3 +61,5 @@ extern WAPObject objc_allocate_class_pair(WAPClassName sub_class_name, WAPClassN
 extern WAPResultVoid objc_class_add_property(WAPObject clazz, WAPPropertyName property_name, WAPObject attributes_addr);
 extern WAPResultVoid objc_class_append_property(WAPClassName class_name, WAPPropertyName property_name, WAPObject attributes_addr);
 extern WAPResultVoid objc_register_class_pair(WAPObject cls);
+
+extern WAPResultVoid objc_nslog(WAPArray array);

@@ -10,7 +10,8 @@
 #define wap_objc_export_basic_h
 
 #include "../wap_objc_define.h"
-
+#include "wap_objc_export_array.h"
+#include <ffi.h>
 
 WAPObject alloc_objc_class(WAPClassName class_name) {
     Class cls = objc_getClass(class_name);
@@ -125,6 +126,67 @@ __WAP_EXPORT_FUNCTION(dealloc_object_raw) {
 }
 
 // added by zhiyangfu
+
+FOUNDATION_EXPORT void NSLog(NSString *format, ...);
+
+int testFunc(int m, int n) {
+    printf("params: %d %d \n", m, n);
+    return m+n;
+}
+
+
+WAPResultVoid objc_nslog(WAPArray array) {
+    
+//    int size = get_array_size(array);
+    
+    void (*functionPtr)(void)  = (void (*)(void))&NSLog;
+    int argCount = 1;
+    
+    //参数类型数组
+    ffi_type **ffiArgTypes = (ffi_type **)alloca(sizeof(ffi_type *) *argCount);
+    ffiArgTypes[0] = &ffi_type_pointer;
+//    ffiArgTypes[1] = &ffi_type_pointer;
+    
+    //参数数据数组
+    void **ffiArgs = (void **)alloca(sizeof(void *) *argCount);
+    void *ffiArgPtr = alloca(ffiArgTypes[0]->size);
+    NSString * __strong *argPtr = (NSString * __strong *)ffiArgPtr;
+    *argPtr = @"xxxx%@";
+    ffiArgs[0] = ffiArgPtr;
+    
+//    void *ffiArgPtr2 = alloca(ffiArgTypes[1]->size);
+//    NSString * __strong *argPtr2 = (NSString * __strong *)ffiArgPtr2;
+//    *argPtr2 = @"xxx";
+//    ffiArgs[1] = ffiArgPtr2;
+    
+    //生成函数原型 ffi_cfi 对象
+    ffi_cif cif;
+    ffi_type *returnFfiType = &ffi_type_sint;
+    ffi_status ffiPrepStatus = ffi_prep_cif(&cif, FFI_DEFAULT_ABI, (unsigned int)argCount, returnFfiType, ffiArgTypes);
+    
+    if (ffiPrepStatus == FFI_OK) {
+        //生成用于保存返回值的内存
+        void *returnPtr = NULL;
+        if (returnFfiType->size) {
+            returnPtr = alloca(returnFfiType->size);
+        }
+        //根据cif函数原型，函数指针，返回值内存指针，函数参数数据调用这个函数
+        ffi_call(&cif, functionPtr, returnPtr, ffiArgs);
+        
+        //拿到返回值
+        int returnValue = *(int *)returnPtr;
+        printf("ret: %d \n", returnValue);
+    }
+    
+    return 0;
+}
+
+__WAP_EXPORT_FUNCTION(objc_nslog_raw) {
+    m3ApiReturnType (WAPResultVoid)
+    m3ApiGetArg  (WAPArray, array)
+    WAPResultVoid result = objc_nslog(array);
+    m3ApiReturn (result);
+}
 
 WAPObject objc_allocate_class_pair(WAPClassName sub_class_name, WAPClassName base_class_name) {
     Class baseClass = objc_getClass(base_class_name);
@@ -288,6 +350,8 @@ void append_setter(id self, SEL _cmd, id newValue) {
 
 WAPResultVoid objc_class_append_property(WAPClassName class_name, WAPPropertyName property_name, WAPObject attributes_addr)
 {
+    objc_nslog(0);
+    
     Class cls = objc_getClass(class_name);
     
     //先判断有没有这个属性，没有就添加，有就直接赋值
