@@ -140,24 +140,24 @@ WAPResultVoid objc_nslog(WAPArray array) {
 //    int size = get_array_size(array);
     
     void (*functionPtr)(void)  = (void (*)(void))&NSLog;
-    int argCount = 1;
+    int argCount = 2;
     
     //参数类型数组
     ffi_type **ffiArgTypes = (ffi_type **)alloca(sizeof(ffi_type *) *argCount);
     ffiArgTypes[0] = &ffi_type_pointer;
-//    ffiArgTypes[1] = &ffi_type_pointer;
+    ffiArgTypes[1] = &ffi_type_pointer;
     
     //参数数据数组
     void **ffiArgs = (void **)alloca(sizeof(void *) *argCount);
     void *ffiArgPtr = alloca(ffiArgTypes[0]->size);
-    NSString * __strong *argPtr = (NSString * __strong *)ffiArgPtr;
+    NSString * __autoreleasing *argPtr = (NSString * __autoreleasing *)ffiArgPtr;
     *argPtr = @"xxxx%@";
     ffiArgs[0] = ffiArgPtr;
     
-//    void *ffiArgPtr2 = alloca(ffiArgTypes[1]->size);
-//    NSString * __strong *argPtr2 = (NSString * __strong *)ffiArgPtr2;
-//    *argPtr2 = @"xxx";
-//    ffiArgs[1] = ffiArgPtr2;
+    void *ffiArgPtr2 = alloca(ffiArgTypes[1]->size);
+    NSString * __autoreleasing *argPtr2 = (NSString * __autoreleasing *)ffiArgPtr2;
+    *argPtr2 = @"xxx";
+    ffiArgs[1] = ffiArgPtr2;
     
     //生成函数原型 ffi_cfi 对象
     ffi_cif cif;
@@ -165,6 +165,12 @@ WAPResultVoid objc_nslog(WAPArray array) {
     ffi_status ffiPrepStatus = ffi_prep_cif(&cif, FFI_DEFAULT_ABI, (unsigned int)argCount, returnFfiType, ffiArgTypes);
     
     if (ffiPrepStatus == FFI_OK) {
+#ifdef __arm64__
+    // 限制函数在寄存器上的参数个数为1
+    // void NSLog(NSString *format, ...) 第一个参数为指针，其他参数全在栈上
+    cif.aarch64_nfixedargs = 1;
+#endif
+        
         //生成用于保存返回值的内存
         void *returnPtr = NULL;
         if (returnFfiType->size) {
