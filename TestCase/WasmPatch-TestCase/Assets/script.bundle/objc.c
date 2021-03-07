@@ -35,6 +35,11 @@ int my_instance_ReplaceMe_requestfromto(WAPObject self, const char * cmd, WAPArr
 }
 
 int entry() {
+    WAPArray params = alloc_array();
+    append_array(params, new_objc_nsstring("xxx%f"));
+    append_array(params, alloc_double(200.22));
+    objc_nslog(params);
+    
     WAPArray attributes = alloc_array();
     append_array(attributes, alloc_string("T"));
     append_array(attributes, alloc_string("@\"NSString\""));

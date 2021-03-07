@@ -11,6 +11,7 @@
 
 #include "../wap_objc_define.h"
 #include "wap_objc_export_array.h"
+#include "wap_objc_export_helper.h"
 #include <ffi.h>
 
 WAPObject alloc_objc_class(WAPClassName class_name) {
@@ -127,61 +128,73 @@ __WAP_EXPORT_FUNCTION(dealloc_object_raw) {
 
 // added by zhiyangfu
 
-FOUNDATION_EXPORT void NSLog(NSString *format, ...);
-
-int testFunc(int m, int n) {
-    printf("params: %d %d \n", m, n);
-    return m+n;
-}
-
-
 WAPResultVoid objc_nslog(WAPArray array) {
-    
-//    int size = get_array_size(array);
+    int size = get_array_size(array);
     
     void (*functionPtr)(void)  = (void (*)(void))&NSLog;
-    int argCount = 2;
+    int argCount = size;
     
     //参数类型数组
     ffi_type **ffiArgTypes = (ffi_type **)alloca(sizeof(ffi_type *) *argCount);
-    ffiArgTypes[0] = &ffi_type_pointer;
-    ffiArgTypes[1] = &ffi_type_pointer;
-    
     //参数数据数组
     void **ffiArgs = (void **)alloca(sizeof(void *) *argCount);
-    void *ffiArgPtr = alloca(ffiArgTypes[0]->size);
-    NSString * __autoreleasing *argPtr = (NSString * __autoreleasing *)ffiArgPtr;
-    *argPtr = @"xxxx%@";
-    ffiArgs[0] = ffiArgPtr;
-    
-    void *ffiArgPtr2 = alloca(ffiArgTypes[1]->size);
-    NSString * __autoreleasing *argPtr2 = (NSString * __autoreleasing *)ffiArgPtr2;
-    *argPtr2 = @"xxx";
-    ffiArgs[1] = ffiArgPtr2;
+    for (int i = 0; i < size; ++i) {
+        WAPObject item = get_array_item(array, i);
+        WAPInternalObject *internalItem = GetInternalObject(item);
+        if (internalItem->cate == 'p') {
+            if (internalItem->type == "int32") {
+                ffiArgTypes[i] = &ffi_type_uint32;
+            } else if (internalItem->type == "int64") {
+                ffiArgTypes[i] = &ffi_type_uint64;
+            } else if (internalItem->type == "double") {
+                ffiArgTypes[i] = &ffi_type_double;
+            } else if (internalItem->type == "float") {
+                ffiArgTypes[i] = &ffi_type_float;
+            } else if (internalItem->type == "string") {
+                ffiArgTypes[i] = &ffi_type_pointer;
+            }
+        } else if (internalItem->cate == 'o') {
+            ffiArgTypes[i] = &ffi_type_pointer;
+        }
+        
+        void *ffiArgPtr = alloca(ffiArgTypes[i]->size);
+        if (internalItem->cate == 'p') {
+            if (internalItem->type == "int32") {
+                int32_t *argPtr = (int32_t *)ffiArgPtr;
+                *argPtr = [internalItem->value intValue];
+            } else if (internalItem->type == "int64") {
+                int64_t *argPtr = (int64_t *)ffiArgPtr;
+                *argPtr = [internalItem->value integerValue];
+            } else if (internalItem->type == "double") {
+                double *argPtr = (double *)ffiArgPtr;
+                *argPtr = [internalItem->value doubleValue];
+            } else if (internalItem->type == "float") {
+                float *argPtr = (float *)ffiArgPtr;
+                *argPtr = [internalItem->value doubleValue];
+            } else if (internalItem->type == "string") {
+                id __autoreleasing *argPtr = (id __autoreleasing *)ffiArgPtr;
+                *argPtr = internalItem->value;
+            }
+        } else if (internalItem->cate == 'o') {
+            id __autoreleasing *argPtr = (id __autoreleasing *)ffiArgPtr;
+            *argPtr = internalItem->value;
+        }
+        ffiArgs[i] = ffiArgPtr;
+    }
     
     //生成函数原型 ffi_cfi 对象
     ffi_cif cif;
-    ffi_type *returnFfiType = &ffi_type_sint;
+    ffi_type *returnFfiType = &ffi_type_void;
     ffi_status ffiPrepStatus = ffi_prep_cif(&cif, FFI_DEFAULT_ABI, (unsigned int)argCount, returnFfiType, ffiArgTypes);
     
     if (ffiPrepStatus == FFI_OK) {
 #ifdef __arm64__
-    // 限制函数在寄存器上的参数个数为1
-    // void NSLog(NSString *format, ...) 第一个参数为指针，其他参数全在栈上
-    cif.aarch64_nfixedargs = 1;
+        // 限制函数在寄存器上的参数个数为1
+        // void NSLog(NSString *format, ...) 第一个参数为指针，其他参数全在栈上
+        cif.aarch64_nfixedargs = 1;
 #endif
-        
-        //生成用于保存返回值的内存
-        void *returnPtr = NULL;
-        if (returnFfiType->size) {
-            returnPtr = alloca(returnFfiType->size);
-        }
         //根据cif函数原型，函数指针，返回值内存指针，函数参数数据调用这个函数
-        ffi_call(&cif, functionPtr, returnPtr, ffiArgs);
-        
-        //拿到返回值
-        int returnValue = *(int *)returnPtr;
-        printf("ret: %d \n", returnValue);
+        ffi_call(&cif, functionPtr, NULL, ffiArgs);
     }
     
     return 0;
@@ -356,8 +369,6 @@ void append_setter(id self, SEL _cmd, id newValue) {
 
 WAPResultVoid objc_class_append_property(WAPClassName class_name, WAPPropertyName property_name, WAPObject attributes_addr)
 {
-    objc_nslog(0);
-    
     Class cls = objc_getClass(class_name);
     
     //先判断有没有这个属性，没有就添加，有就直接赋值

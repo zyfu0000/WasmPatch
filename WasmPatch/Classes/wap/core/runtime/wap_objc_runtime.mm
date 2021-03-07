@@ -80,6 +80,7 @@ void ObjcRuntime::initRuntime() {
     RT_LINK(objc_class_append_property);
     RT_LINK(objc_allocate_class_pair);
     RT_LINK(objc_register_class_pair);
+    RT_LINK(objc_nslog);
 }
 
 }
